@@ -3,6 +3,13 @@
 #include <SFML/Window/Event.hpp>
 
 
+sf::Color BG_COLOR = sf::Color(79, 175, 68);
+sf::Color TITLE_COLOR = sf::Color(239, 68, 35);
+sf::Color TEXT_COLOR = sf::Color(255, 149, 38);
+sf::Color SELECT_COLOR = sf::Color(246, 235, 20);
+sf::Color WHITE_COLOR = sf::Color(255, 255, 255);
+
+
 MainMenu::MainMenu(std::shared_ptr<Context> &context) 
 	: m_context(context), m_isPlayButtonSelected(true),
 	m_isPlayButtonPressed(true), m_isExitButtonSelected(false), 
@@ -27,6 +34,8 @@ void MainMenu::Init() {
 	m_gameTitle.setPosition(
 		m_context->m_window->getSize().x / 2,
 		m_context->m_window->getSize().y / 2 - 150.f);
+	m_gameTitle.setFillColor(TITLE_COLOR);
+	m_gameTitle.setOutlineThickness(2.5f);
 
 	// Play
 	m_playButton.setFont(m_context->m_assets->GetFont(MAIN_FONT));
@@ -38,8 +47,9 @@ void MainMenu::Init() {
 		m_context->m_window->getSize().x / 2,
 		m_context->m_window->getSize().y / 2 - 25.f);
 	m_playButton.setCharacterSize(20);
+	m_playButton.setOutlineThickness(1.f);
 
-	// Title
+	// Exit
 	m_exitButton.setFont(m_context->m_assets->GetFont(MAIN_FONT));
 	m_exitButton.setString("Exit");
 	m_exitButton.setOrigin(
@@ -49,6 +59,7 @@ void MainMenu::Init() {
 		m_context->m_window->getSize().x / 2,
 		m_context->m_window->getSize().y / 2 + 25.f);
 	m_exitButton.setCharacterSize(20);
+	m_exitButton.setOutlineThickness(1.f);
 }
 
 void MainMenu::ProcessInput() {
@@ -101,12 +112,12 @@ void MainMenu::ProcessInput() {
 
 void MainMenu::Update(sf::Time deltaTime) {
 	if(m_isPlayButtonSelected) {
-		m_playButton.setFillColor(sf::Color::Yellow);
-		m_exitButton.setFillColor(sf::Color::White);
+		m_playButton.setFillColor(SELECT_COLOR);
+		m_exitButton.setFillColor(WHITE_COLOR);
 	}
 	else {
-		m_playButton.setFillColor(sf::Color::White);
-		m_exitButton.setFillColor(sf::Color::Yellow);
+		m_playButton.setFillColor(WHITE_COLOR);
+		m_exitButton.setFillColor(SELECT_COLOR);
 	}
 
 	if (m_isPlayButtonPressed) {
@@ -120,7 +131,7 @@ void MainMenu::Update(sf::Time deltaTime) {
 
 void MainMenu::Draw() {
 
-	m_context->m_window->clear();
+	m_context->m_window->clear(BG_COLOR);
 	m_context->m_window->draw(m_gameTitle);
 	m_context->m_window->draw(m_playButton);
 	m_context->m_window->draw(m_exitButton);
