@@ -8,7 +8,8 @@
 #include "Game.hpp"
 #include "State.hpp"
 
-class GamePlay : public Engine::State {
+class GamePlay : public Engine::State 
+{
 private:
 	std::shared_ptr<Context> m_context;
 	sf::Sprite m_grass;
@@ -19,7 +20,7 @@ private:
 	// Added Snake
 
 public:
-	GamePlay(std::shared_ptr<Context> &context);
+	GamePlay(std::shared_ptr<Context>& context);
 	~GamePlay();
 
 	void Init() override;

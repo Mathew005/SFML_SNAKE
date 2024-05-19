@@ -1,10 +1,19 @@
 #include "GamePlay.hpp"
+#include <iostream>
 
-
-GamePlay::GamePlay(std::shared_ptr<Context>& context){}
+GamePlay::GamePlay(std::shared_ptr<Context> &context):
+m_context(context){}
 GamePlay::~GamePlay(){}
 
 void GamePlay::Init() {
+	if (m_context) {
+		std::cout << "context";
+	}
+	else
+	{
+		std::cout << "failed";
+	}
+
 	m_context->m_assets->AddTexture(GRASS, "Assets/Textures/grass.png", true);
 	m_context->m_assets->AddTexture(FOOD, "Assets/Textures/food.png");
 	m_context->m_assets->AddTexture(WALL, "Assets/Textures/wall.png", true);
