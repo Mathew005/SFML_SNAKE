@@ -13,7 +13,7 @@ sf::Color WHITE_COLOR = sf::Color(255, 255, 255);
 
 MainMenu::MainMenu(std::shared_ptr<Context> &context) 
 	: m_context(context), m_isPlayButtonSelected(true),
-	m_isPlayButtonPressed(true), m_isExitButtonSelected(false), 
+	m_isPlayButtonPressed(false), m_isExitButtonSelected(false), 
 	m_isExitButtonPressed(false)
 {
 }
