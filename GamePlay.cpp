@@ -9,9 +9,10 @@
 #include <time.h>
 
 GamePlay::GamePlay(std::shared_ptr<Context> &context):
-m_context(context), 
-m_snakeDirection({16.f,0.f}), 
-m_elapsedTime(sf::Time::Zero) 
+	m_context(context), 
+	m_snakeDirection({16.f,0.f}), 
+	m_elapsedTime(sf::Time::Zero),
+	m_score(0)
 {
 	srand(time(nullptr));
 }
@@ -43,6 +44,10 @@ void GamePlay::Init() {
 	m_food.setPosition(m_context->m_window->getSize().x / 2, m_context->m_window->getSize().y / 2);
 
 	m_snake.Init(m_context->m_assets->GetTexture(SNAKE));
+
+	m_scoreText.setFont(m_context->m_assets->GetFont(MAIN_FONT));
+	m_scoreText.setCharacterSize(16);
+	m_scoreText.setString("Score : " + std::to_string(m_score));
 }
 void GamePlay::ProcessInput() 
 {
@@ -117,13 +122,16 @@ void GamePlay::Update(sf::Time deltaTime)
 			int w_x = m_context->m_window->getSize().x;
 			int w_y = m_context->m_window->getSize().y;
 
-			x = rand() % w_x;
-			y = rand() % w_y;
+			x = 16 * round((rand() % w_x)/16);
+			y = 16 * round((rand() % w_y)/16);
 
 			x = std::max(16, std::min(x, w_x - 2*16));
-			y = std::max(16, std::min(y, w_y - 2 * 16));
+			y = std::max(16, std::min(y, w_y - 2*16));
 
 			m_food.setPosition(x, y);
+
+			m_score += 1;
+			m_scoreText.setString("Score : " + std::to_string(m_score));
 		}
 		else
 		{
@@ -143,6 +151,7 @@ void GamePlay::Draw() {
 
 	m_context->m_window->draw(m_food);
 	m_context->m_window->draw(m_snake);
+	m_context->m_window->draw(m_scoreText);
 
 	m_context->m_window->display();
 }
