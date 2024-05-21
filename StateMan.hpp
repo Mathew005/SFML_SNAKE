@@ -5,26 +5,29 @@
 
 #include "State.hpp"
 
+namespace Engine
+{
+    class StateMan
+    {
+    public:
+        StateMan();
+        ~StateMan();
 
-namespace Engine {
-	class StateMan {
-	private:
-		std::stack<std::unique_ptr<State>> m_stateStack;
-		std::unique_ptr<State> m_newState;
+        void Add(std::unique_ptr<State> toAdd, bool replace = false);
+        void PopCurrent();
+        void PopAll();
+        void ProcessStateChange();
+        std::unique_ptr<State> &GetCurrent();
+        bool IsEmpty() const;
 
-		bool m_add;
-		bool m_replace;
-		bool m_remove;
+    private:
+        std::stack<std::unique_ptr<State>> m_stateStack;
+        std::unique_ptr<State> m_newState;
 
-	public:
-		StateMan();
+        bool m_add;
+        bool m_replace;
+        bool m_remove;
+        bool m_removeAll;
+    };
 
-		~StateMan();
-
-		void Add(std::unique_ptr<State> toAdd, bool replace = false);
-		void PopCurrent();
-		void ProcessStateChange();
-		std::unique_ptr<State>& GetCurrent();
-	};
 }
-

@@ -16,7 +16,6 @@ MainMenu::~MainMenu()
 {
 }
 
-
 void MainMenu::Init() {
 	m_context->m_assets->AddFont(MAIN_FONT, "Assets/Fonts/Pacifico-Regular.ttf");
 

@@ -1,5 +1,6 @@
 #include "GamePlay.hpp"
 #include "GameOver.hpp"
+#include "PauseGame.hpp"
 
 #include <SFML/Window/Event.hpp>
 
@@ -74,7 +75,12 @@ void GamePlay::ProcessInput()
 			}
 			case sf::Keyboard::Right:
 			{
-				newDirection = { 16.f, 0.f};
+				newDirection = { 16.f, 0.f };
+				break;
+			}
+			case sf::Keyboard::Escape:
+			{
+				m_context->m_states->Add(std::make_unique<PauseGame>(m_context));
 				break;
 			}
 			default:
@@ -95,8 +101,6 @@ void GamePlay::Update(sf::Time deltaTime)
 
 	if (m_elapsedTime.asSeconds() > 0.1) {
 		
-		bool isOnWall = false;
-
 		for (auto& wall : m_walls) {
 			if (m_snake.IsOn(wall)) {
 				m_context->m_states->Add(std::make_unique<GameOver>(m_context), true);
