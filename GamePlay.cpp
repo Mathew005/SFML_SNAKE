@@ -46,7 +46,7 @@ void GamePlay::Init() {
 	m_snake.Init(m_context->m_assets->GetTexture(SNAKE));
 
 	m_scoreText.setFont(m_context->m_assets->GetFont(MAIN_FONT));
-	m_scoreText.setCharacterSize(16);
+	m_scoreText.setCharacterSize(15);
 	m_scoreText.setString("Score : " + std::to_string(m_score));
 }
 void GamePlay::ProcessInput() 
@@ -136,6 +136,11 @@ void GamePlay::Update(sf::Time deltaTime)
 		else
 		{
 			m_snake.Move(m_snakeDirection);
+		}
+
+		if (m_snake.isSelfIntersecting()) {
+			m_context->m_states->Add(std::make_unique<GameOver>(m_context), true);
+			
 		}
 
 		m_elapsedTime = sf::Time::Zero;
